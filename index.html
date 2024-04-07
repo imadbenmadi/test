@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Registration Form</title>
+    </head>
+    <body>
+        <h2>Registration Form</h2>
+        <form id="registrationForm">
+            <label for="FirstName">First Name:</label><br />
+            <input type="text" id="FirstName" name="FirstName" required /><br />
+            <label for="LastName">Last Name:</label><br />
+            <input type="text" id="LastName" name="LastName" required /><br />
+            <label for="Email">Email:</label><br />
+            <input type="email" id="Email" name="Email" required /><br />
+            <label for="Password">Password:</label><br />
+            <input
+                type="password"
+                id="Password"
+                name="Password"
+                required
+            /><br />
+            <label for="Gender">Gender:</label><br />
+            <select id="Gender" name="Gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option></select
+            ><br />
+            <label for="Telephone">Telephone:</label><br />
+            <input type="text" id="Telephone" name="Telephone" required /><br />
+            <label for="Address">Address:</label><br />
+            <input type="text" id="Address" name="Address" /><br />
+            <label for="Image">Profile Image:</label><br />
+            <input type="file" id="Image" name="image" /><br />
+            <button type="submit">Register</button>
+        </form>
+
+        <script>
+            document
+                .getElementById("registrationForm")
+                .addEventListener("submit", async function (event) {
+                    event.preventDefault();
+
+                    const form = event.target;
+                    const formData = new FormData(form);
+
+                    try {
+                        const response = await fetch(
+                            "http://localhost:3000/Register",
+                            {
+                                method: "POST",
+                                body: formData,
+                            }
+                        );
+                        const data = await response.json();
+                        console.log(data);
+                        alert(data.message);
+                        form.reset();
+                    } catch (error) {
+                        console.error(error);
+                        alert("An error occurred. Please try again.");
+                    }
+                });
+        </script>
+    </body>
+</html>
